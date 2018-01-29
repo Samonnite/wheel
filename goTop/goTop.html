@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>goTop</title>
+    <link rel="stylesheet" href="Font-Awesome-master/css/font-awesome.min.css">
+    <style>
+        body {
+            height: 1500px;
+        }
+        h1 {
+            text-align: center;
+        }
+        #go-top {
+            position: fixed;
+            z-index: 99;
+            bottom: 100px;
+            right: 100px;
+            display: none;
+            color: #fff;
+            background-color: lightblue;
+            opacity: 0.8;
+            font-size: 50px;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            cursor: pointer;
+        } 
+        #go-top:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <h1>请往下拉，回到顶部按钮自会出现</h1>
+    <script src="https://cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
+    <script>
+    function Gotop(distance) {
+        this.distance = distance;
+        this.createNode();
+        this.bind();
+    }
+    Gotop.prototype = {
+        createNode:function () {
+            var _this = this;
+            _this.$node = $('<div id="go-top"><i class="fa fa-angle-up"></i></div>');
+            $('body').append(_this.$node);
+            _this.$node.on('click',function() {
+                $(window).scrollTop(0);
+            });
+            _this.hide();
+        },
+        bind:function() {
+            var _this = this;
+            $(window).on('scroll',function() {
+                if($(window).scrollTop() >= _this.distance) {
+                    _this.show();
+                }else {
+                    _this.hide();
+                }
+            })
+        },
+        show:function() {
+            var _this = this;
+            _this.$node.show();
+        },
+        hide:function() {
+            var _this = this;
+            _this.$node.hide();
+        }
+    };
+    new Gotop(300);
+
+
+//    var goTop = (function () {
+//        function init(distance) {
+//            var $goTop = $('<div id="go-top">回到顶部</div>');
+//            var $megoTop = $goTop;
+//            $("body").append($megoTop);
+//            bind($megoTop,distance);
+//        }
+//        function bind($megoTop,distance) {
+//            $(window).on("scroll",function () {
+//                var scrollTop = $(window).scrollTop();
+//                if(scrollTop>distance){
+//                    $megoTop.show();
+//                }
+//                else {
+//                    $megoTop.hide();
+//                }
+//            });
+//            $megoTop.on("click",function () {
+//                $(window).scrollTop(0);
+//            })
+//        }
+//        return{
+//            init:init
+//        }
+//    })();
+//    goTop.init(300);
+    </script>
+
+</body>
+</html>
